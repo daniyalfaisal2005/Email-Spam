@@ -156,10 +156,10 @@ def visualize_bipartite(df, metrics):
     nx.draw_networkx_labels(B, pos, font_size=9, font_weight='bold', ax=ax)
     
     ax.set_title("Bipartite Email Network\nGreen: Senders (Left) | Blue: Receivers (Right) | Red: Spammers", 
-                fontsize=14, fontweight='bold', pad=20)
+                fontsize=14, fontweight='bold', pad=50)
     ax.axis('off')
     
-    plt.tight_layout()
+    plt.subplots_adjust(top=0.85)
     plt.savefig("graph_bipartite.png", dpi=300, bbox_inches='tight')
     plt.show()
 
