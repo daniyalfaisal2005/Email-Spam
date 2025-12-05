@@ -329,11 +329,11 @@ HTML_TEMPLATE = """
                     <div class="form-group">
                         <label>Select Sample Dataset:</label>
                         <select id="dataset">
-                            <option value="demo">🔍 Demo (Small - 27 emails)</option>
-                            <option value="legitimate">✓ Legitimate Only (135 emails)</option>
-                            <option value="broadcast" selected>📡 Broadcast Spam (435 emails)</option>
-                            <option value="ring">🔄 Ring Spam (435 emails)</option>
-                            <option value="combined">📦 All Combined (570+ emails)</option>
+                            <option value="demo" selected>🔍 Demo (Small - 13 emails, 1 Spammer)</option>
+                            <option value="legitimate">✓ Legitimate (16 emails, 1 Suspicious)</option>
+                            <option value="broadcast">📡 Broadcast Spam (13 emails, 1 Heavy Spammer)</option>
+                            <option value="ring">🔄 Ring Spam (14 emails, 1 Suspicious)</option>
+                            <option value="combined">📦 All Combined (25 emails, Spam + Suspicious)</option>
                         </select>
                     </div>
                     <button onclick="loadDataset()">🔄 Load Dataset</button>
@@ -380,19 +380,6 @@ HTML_TEMPLATE = """
                     <h2>🔍 Graph Theory Metrics</h2>
                     <div id="metrics"></div>
                 </div>
-                
-                <div class="panel">
-                    <h2>📐 Algorithms Used</h2>
-                    <p style="font-size: 0.9em; line-height: 1.6;">
-                        <strong>✓ Week 3:</strong> Degree Analysis<br>
-                        <strong>✓ Week 4-5:</strong> Centrality Measures (Betweenness, Closeness)<br>
-                        <strong>✓ Week 6:</strong> Connected Components<br>
-                        <strong>✓ Week 7:</strong> Shortest Paths (Dijkstra)<br>
-                        <strong>✓ Week 8:</strong> Minimum Spanning Tree<br>
-                        <strong>✓ Week 11:</strong> Vertex Coloring<br>
-                        <strong>✓ Week 12:</strong> Network Metrics & Clustering
-                    </p>
-                </div>
             </div>
         </div>
         
@@ -401,7 +388,7 @@ HTML_TEMPLATE = """
             <div class="content full-grid">
                 <div class="panel">
                     <h2>⚠️ Top Threat Candidates</h2>
-                    <p style="font-size: 0.85em; color: #666; margin-bottom: 15px;">Email addresses ranked by spam detection score (3-tier system: Degree 40% + Centrality 35% + Temporal Burst 25%)</p>
+                    <p style="font-size: 0.85em; color: #666; margin-bottom: 15px;">Email addresses ranked by spam detection score (Degree Ratio: out-degree / in-degree)</p>
                     <div id="topSpam"></div>
                 </div>
             </div>
@@ -854,11 +841,11 @@ def get_graph_data():
         # Color map for classifications
         def get_color(score):
             if score >= 80:
-                return '#dc3545'  # Red - Spam
+                return {'background': '#dc3545', 'border': '#bb2d3b'}  # Red - Spam
             elif score >= 40:
-                return '#ff9800'  # Orange - Suspicious
+                return {'background': '#ff9800', 'border': '#e67e22'}  # Orange - Suspicious
             else:
-                return '#28a745'  # Green - Legitimate
+                return {'background': '#28a745', 'border': '#20c997'}  # Green - Legitimate
         
         # Create nodes
         nodes = []
@@ -876,7 +863,7 @@ def get_graph_data():
                 'title': f'{node}\nScore: {score:.1f}',
                 'color': color,
                 'size': size,
-                'font': {'size': 12, 'face': 'Tahoma'}
+                'font': {'size': 12, 'face': 'Tahoma', 'color': '#fff'}
             })
         
         # Create edges from NetworkX graph
