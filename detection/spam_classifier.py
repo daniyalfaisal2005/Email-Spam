@@ -1,9 +1,3 @@
-"""
-Spam Classifier Module
-
-Classifies nodes into spam/suspicious/legitimate categories.
-"""
-
 from typing import Dict, List
 from utils.config import SPAM_SCORE_THRESHOLD, SUSPICIOUS_SCORE_THRESHOLD
 

@@ -1,9 +1,3 @@
-"""
-Email Data Parser
-
-Loads and parses email data from CSV files.
-"""
-
 import csv
 import os
 from typing import List, Tuple

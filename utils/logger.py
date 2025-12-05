@@ -1,7 +1,3 @@
-"""
-Logger setup for email spam detection system.
-"""
-
 import logging
 import sys
 

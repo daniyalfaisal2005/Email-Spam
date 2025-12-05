@@ -870,7 +870,7 @@ def get_graph_data():
         graph = current_data['graph']
         scores = current_data['scores']
         
-        # Color map for classifications
+        # Hint: Color map for classifications
         def get_color(score):
             if score >= 80:
                 return {'background': '#dc3545', 'border': '#bb2d3b'}  # Red - Spam

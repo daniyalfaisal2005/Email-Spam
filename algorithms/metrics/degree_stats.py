@@ -1,17 +1,3 @@
-"""
-Degree Statistics Module
-
-Calculates in-degree and out-degree metrics for email networks.
-
-Concept: 
-- In-degree: Number of unique senders emailing a person
-- Out-degree: Number of unique recipients a person emails
-
-For spam detection:
-- High out-degree + low in-degree = likely spammer (broadcasts emails)
-- Balanced in/out degree = likely legitimate user
-"""
-
 from typing import Dict
 from core.directed_graph import DirectedEmailGraph
 

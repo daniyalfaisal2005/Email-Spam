@@ -1,7 +1,3 @@
-"""
-Input validation functions for email spam detection system.
-"""
-
 import re
 
 

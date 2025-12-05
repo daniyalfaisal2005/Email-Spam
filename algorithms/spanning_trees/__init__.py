@@ -1,1 +1,0 @@
-"""Spanning tree algorithms."""

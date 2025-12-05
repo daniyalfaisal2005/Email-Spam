@@ -1,7 +1,3 @@
-"""
-Configuration and constants for email spam detection system.
-"""
-
 # Spam Detection Thresholds
 SPAM_SCORE_THRESHOLD = 80
 SUSPICIOUS_SCORE_THRESHOLD = 40

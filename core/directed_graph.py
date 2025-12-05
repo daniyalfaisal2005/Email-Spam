@@ -1,14 +1,3 @@
-"""
-Directed Email Graph Model
-
-Represents email communication as a directed weighted graph where:
-- Nodes: Email addresses (senders and recipients)
-- Edges: Email communications (sender → recipient)
-- Edge weights: Frequency of emails (number of emails sent)
-
-This module implements the core data structure for email network analysis.
-"""
-
 import networkx as nx
 from typing import Dict, List, Tuple, Optional
 

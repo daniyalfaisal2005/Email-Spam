@@ -1,7 +1,3 @@
-"""
-Helper functions for email spam detection system.
-"""
-
 def format_number(num, decimals=2):
     """Format number to specified decimal places."""
     return round(num, decimals)

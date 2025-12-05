@@ -1,14 +1,3 @@
-"""
-Spam Scorer Module
-
-Calculates spam scores based on degree ratio analysis.
-
-Metrics used:
-1. Degree Ratio: out-degree / (in-degree + 1)
-   - High ratio = broadcaster = suspicious
-   - This is the primary spam detection metric
-"""
-
 from typing import Dict
 from core.directed_graph import DirectedEmailGraph
 from algorithms.metrics.degree_stats import get_degree_ratio, get_out_degree, get_in_degree

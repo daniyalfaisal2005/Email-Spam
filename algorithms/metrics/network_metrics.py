@@ -1,15 +1,3 @@
-"""
-Network Metrics Module
-
-Calculates global network properties like density, diameter, clustering coefficient.
-
-Concept:
-- Network Density: How connected is the network (0 to 1)
-- Diameter: Maximum shortest path between any two nodes
-- Clustering Coefficient: How much nodes cluster together
-- Average Path Length: Average shortest path between nodes
-"""
-
 import networkx as nx
 from typing import Optional
 from core.directed_graph import DirectedEmailGraph

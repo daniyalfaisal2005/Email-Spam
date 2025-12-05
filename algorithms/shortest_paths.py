@@ -1,20 +1,3 @@
-"""
-Shortest Paths Module - Dijkstra's Algorithm
-
-Implements Dijkstra's algorithm for finding shortest paths in weighted graphs.
-
-Concept:
-Dijkstra's algorithm finds the shortest path between two nodes in a weighted graph.
-- Used for: Finding minimum-cost routes
-- Weight interpretation: Can be distance, cost, or in this case, inverse email frequency
-- Time complexity: O((V + E) log V) with min-heap
-
-Application in spam detection:
-- Find shortest communication chain between suspected spammers and victims
-- Identify if spammers use intermediaries to avoid detection
-- Trace spam propagation paths
-"""
-
 import networkx as nx
 from typing import List, Tuple, Optional
 from core.directed_graph import DirectedEmailGraph
