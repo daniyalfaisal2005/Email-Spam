@@ -26,6 +26,5 @@ build/
 Thumbs.db
 
 # Project specific
-*.csv
 .env
 config_local.py

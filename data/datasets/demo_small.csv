@@ -1,0 +1,14 @@
+sender,recipient,count
+alice@example.com,bob@example.com,2
+bob@example.com,charlie@example.com,1
+charlie@example.com,diana@example.com,2
+spammer1@example.com,alice@example.com,15
+spammer1@example.com,bob@example.com,15
+spammer1@example.com,charlie@example.com,15
+spammer1@example.com,diana@example.com,15
+spammer1@example.com,eve@example.com,15
+spammer1@example.com,frank@example.com,15
+spammer1@example.com,grace@example.com,15
+spammer1@example.com,henry@example.com,15
+spammer1@example.com,iris@example.com,15
+spammer1@example.com,jack@example.com,15
