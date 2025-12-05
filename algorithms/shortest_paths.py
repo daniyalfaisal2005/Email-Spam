@@ -77,13 +77,20 @@ def dijkstra_shortest_path(
                 inverted_graph[u][v]['weight'] = max_weight + 1 - original_weight
             
             path = nx.dijkstra_path(inverted_graph, source, target, weight='weight')
-            distance = nx.dijkstra_path_length(inverted_graph, source, target, weight='weight')
+            
+            # Calculate ACTUAL distance (sum of original weights along the path)
+            actual_distance = 0
+            for i in range(len(path) - 1):
+                edge_weight = nx_graph[path[i]][path[i+1]].get('weight', 1)
+                actual_distance += edge_weight
+            
+            return path, actual_distance
         else:
             # Use weights directly
             path = nx.dijkstra_path(nx_graph, source, target, weight='weight')
             distance = nx.dijkstra_path_length(nx_graph, source, target, weight='weight')
-        
-        return path, distance
+            
+            return path, distance
     
     except nx.NetworkXNoPath:
         return None, None

@@ -4,7 +4,7 @@ Run: python web_gui_tabbed.py
 Then open: http://localhost:5000 in your browser
 """
 
-from flask import Flask, render_template_string, request, jsonify, send_file
+from flask import Flask, render_template_string, request, jsonify, send_file, make_response
 import json
 import os
 import sys
@@ -628,35 +628,35 @@ HTML_TEMPLATE = """
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    let html = '<div class="panel" style="background: #d4edda; border: 2px solid #28a745;">';
-                    html += '<div class="success">✓ Path Found!</div>';
+                    let html = '<div class="panel" style="background: #164e63; border: 2px solid #10b981; color: #00d9ff;">';
+                    html += '<div style="color: #10b981; font-weight: bold; font-size: 1.1em;">✓ Path Found!</div>';
                     html += '<p><strong>Distance:</strong> ' + data.distance.toFixed(2) + '</p>';
                     html += '<p><strong>Number of Hops:</strong> ' + data.hops + ' hop' + (data.hops !== 1 ? 's' : '') + '</p>';
-                    html += '<p style="word-break: break-all; margin-top: 15px;"><strong>Communication Route:</strong><br><span style="background: #f0f0f0; padding: 10px; border-radius: 5px; display: block; margin-top: 10px; font-size: 0.95em;">' + data.path.join(' → ') + '</span></p>';
+                    html += '<p style="word-break: break-all; margin-top: 15px;"><strong>Communication Route:</strong><br><span style="background: #0f172a; padding: 10px; border-radius: 5px; display: block; margin-top: 10px; font-size: 0.95em; color: #00ffff; border: 1px solid #00d9ff;">' + data.path.join(' → ') + '</span></p>';
                     html += '</div>';
                     document.getElementById('pathResult').innerHTML = html;
                 } else if (data.reverse_path) {
-                    let html = '<div class="panel" style="background: #fff3cd; border: 2px solid #ffc107;">';
-                    html += '<div style="color: #ff9800;"><strong>⚠️ No direct path found</strong></div>';
+                    let html = '<div class="panel" style="background: #664d0c; border: 2px solid #ff9800; color: #ffd700;">';
+                    html += '<div style="color: #ff9800; font-weight: bold; font-size: 1.1em;">⚠️ No direct path found</div>';
                     html += '<p style="margin-top: 10px;"><strong>Reverse path exists:</strong></p>';
                     html += '<p><strong>Distance:</strong> ' + data.reverse_distance.toFixed(2) + '</p>';
                     html += '<p><strong>Hops:</strong> ' + data.reverse_hops + '</p>';
-                    html += '<p style="word-break: break-all; margin-top: 15px;"><strong>Reverse Route:</strong><br><span style="background: #f0f0f0; padding: 10px; border-radius: 5px; display: block; margin-top: 10px; font-size: 0.95em;">' + data.reverse_path.join(' → ') + '</span></p>';
+                    html += '<p style="word-break: break-all; margin-top: 15px;"><strong>Reverse Route:</strong><br><span style="background: #0f172a; padding: 10px; border-radius: 5px; display: block; margin-top: 10px; font-size: 0.95em; color: #ffd700; border: 1px solid #ff9800;">' + data.reverse_path.join(' → ') + '</span></p>';
                     html += '<p style="margin-top: 15px; font-size: 0.9em;"><strong>💡 Tip:</strong> ' + data.suggestion + '</p>';
                     html += '</div>';
                     document.getElementById('pathResult').innerHTML = html;
                 } else {
-                    let html = '<div class="panel" style="background: #f8d7da; border: 2px solid #dc3545;">';
-                    html += '<div class="error">✗ No communication path found</div>';
+                    let html = '<div class="panel" style="background: #4a1d1d; border: 2px solid #ef4444; color: #ff6b6b;">';
+                    html += '<div style="color: #ef4444; font-weight: bold; font-size: 1.1em;">✗ No communication path found</div>';
                     html += '<p style="margin-top: 10px;">' + data.message + '</p>';
                     if (data.all_nodes) {
-                        html += '<p style="margin-top: 15px; font-size: 0.9em;"><strong>Available addresses (' + data.total_nodes + ' total):</strong><br>' + data.all_nodes + '</p>';
+                        html += '<p style="margin-top: 15px; font-size: 0.9em;"><strong>Available addresses (' + data.total_nodes + ' total):</strong><br><span style="background: #0f172a; padding: 8px; border-radius: 3px; display: block; margin-top: 8px; max-height: 150px; overflow-y: auto; border: 1px solid #ef4444; color: #ff6b6b;">' + data.all_nodes + '</span></p>';
                     }
                     html += '</div>';
                     document.getElementById('pathResult').innerHTML = html;
                 }
             })
-            .catch(e => document.getElementById('pathResult').innerHTML = '<div class="error">✗ Error: ' + e + '</div>');
+            .catch(e => document.getElementById('pathResult').innerHTML = '<div class="panel" style="background: #4a1d1d; border: 2px solid #ef4444; color: #ff6b6b;"><div style="color: #ef4444; font-weight: bold;">✗ Error:</div><p>' + e + '</p></div>');
         }
         
         // Load on start
@@ -672,7 +672,11 @@ HTML_TEMPLATE = """
 @app.route('/')
 def index():
     """Main page"""
-    return render_template_string(HTML_TEMPLATE)
+    response = make_response(render_template_string(HTML_TEMPLATE))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 
 @app.route('/api/load-dataset/<name>')
