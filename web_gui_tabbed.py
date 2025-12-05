@@ -8,6 +8,8 @@ from flask import Flask, render_template_string, request, jsonify, send_file
 import json
 import os
 import sys
+import webbrowser
+import threading
 from datetime import datetime
 from io import StringIO
 
@@ -562,12 +564,14 @@ HTML_TEMPLATE = """
                 .then(r => r.json())
                 .then(data => {
                     let html = '<div class="metrics-grid">';
+                    html += '<div class="metric-box"><div class="metric-label">Node Count</div><div class="metric-value">' + data.num_nodes + '</div></div>';
+                    html += '<div class="metric-box"><div class="metric-label">Edge Count</div><div class="metric-value">' + data.num_edges + '</div></div>';
+                    html += '<div class="metric-box"><div class="metric-label">Average Degree</div><div class="metric-value">' + data.average_degree.toFixed(2) + '</div></div>';
                     html += '<div class="metric-box"><div class="metric-label">Network Density</div><div class="metric-value">' + data.density.toFixed(4) + '</div></div>';
                     html += '<div class="metric-box"><div class="metric-label">Diameter</div><div class="metric-value">' + data.diameter + '</div></div>';
-                    html += '<div class="metric-box"><div class="metric-label">Clustering Coeff</div><div class="metric-value">' + data.clustering.toFixed(4) + '</div></div>';
-                    html += '<div class="metric-box"><div class="metric-label">Triangles</div><div class="metric-value">' + data.triangles + '</div></div>';
+                    html += '<div class="metric-box"><div class="metric-label">Radius</div><div class="metric-value">' + data.radius + '</div></div>';
                     html += '</div>';
-                    html += '<p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Interpretation:</strong> Network density indicates sparsity, diameter shows max distance, clustering coefficient reveals triangle structures.</p>';
+                    html += '<p style="margin-top: 15px; font-size: 0.9em; color: #666;"><strong>Interpretation:</strong> <br>• <strong>Node Count:</strong> Total email addresses in network<br>• <strong>Edge Count:</strong> Total email connections<br>• <strong>Average Degree:</strong> Average connections per email<br>• <strong>Density:</strong> Sparsity of network<br>• <strong>Diameter:</strong> Maximum distance between nodes<br>• <strong>Radius:</strong> Minimum eccentricity (organized spam = lower radius)</p>';
                     document.getElementById('metrics').innerHTML = html;
                 });
         }
@@ -666,9 +670,10 @@ def load_dataset(name):
     if name not in datasets:
         return jsonify({'error': 'Unknown dataset'}), 404
     
-    file_path = datasets[name]
+    # Use absolute path based on project root
+    file_path = os.path.join(project_root, datasets[name])
     if not os.path.exists(file_path):
-        return jsonify({'error': 'Dataset not found'}), 404
+        return jsonify({'error': f'Dataset not found at {file_path}'}), 404
     
     try:
         global current_data
@@ -685,10 +690,12 @@ def load_dataset(name):
         
         nx_graph = graph.to_networkx()
         metrics = {
+            'num_nodes': graph.get_number_of_nodes(),
+            'num_edges': graph.get_number_of_edges(),
+            'average_degree': network_metrics.average_degree(graph),
             'density': network_metrics.network_density(graph),
             'diameter': network_metrics.diameter(graph),
-            'clustering': network_metrics.average_clustering_coefficient(graph),
-            'triangles': network_metrics.number_of_triangles(graph),
+            'radius': network_metrics.radius(graph),
         }
         
         current_data = {
@@ -756,10 +763,12 @@ def get_metrics():
     
     metrics = current_data['metrics']
     return jsonify({
+        'num_nodes': metrics['num_nodes'],
+        'num_edges': metrics['num_edges'],
+        'average_degree': metrics['average_degree'],
         'density': metrics['density'],
         'diameter': metrics['diameter'],
-        'clustering': metrics['clustering'],
-        'triangles': metrics['triangles']
+        'radius': metrics['radius']
     })
 
 
@@ -898,12 +907,25 @@ if __name__ == '__main__':
     print("  EMAIL SPAM DETECTION SYSTEM - WEB INTERFACE")
     print("="*70)
     print("\n[OK] Flask server starting...")
-    print("[OK] Open your browser to: http://localhost:5000")
+    print("[OK] Opening browser to: http://localhost:5000")
     print("\nFeatures:")
     print("  • 5 Organized Tabs (Data, Graph, Analysis, Threats, Dijkstra)")
     print("  • Interactive email network visualization")
     print("  • Network metrics dashboard")
     print("  • Dijkstra shortest path finder")
+    print("  • Real-time spam analysis")
+    print("="*70 + "\n")
+    
+    # Open browser in a separate thread after a short delay
+    def open_browser():
+        import time
+        time.sleep(1)  # Give Flask time to start
+        webbrowser.open('http://localhost:5000')
+    
+    browser_thread = threading.Thread(target=open_browser, daemon=True)
+    browser_thread.start()
+    
+    app.run(debug=False, port=5000)
     print("  • Real-time spam analysis")
     print("\n[INFO] Press Ctrl+C to stop\n")
     print("="*70 + "\n")
