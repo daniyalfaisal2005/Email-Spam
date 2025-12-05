@@ -41,23 +41,26 @@ HTML_TEMPLATE = """
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #e2e8f0;
         }
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background: #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,200,200,0.15);
             overflow: hidden;
+            border: 1px solid #334155;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+            color: #00d9ff;
             padding: 30px;
             text-align: center;
+            border-bottom: 2px solid #00d9ff;
         }
         .header h1 { font-size: 2.5em; margin-bottom: 10px; }
         .header p { font-size: 1.1em; opacity: 0.9; }
@@ -66,8 +69,8 @@ HTML_TEMPLATE = """
         /* Tab Navigation */
         .tab-container {
             display: flex;
-            border-bottom: 2px solid #dee2e6;
-            background: #f8f9fa;
+            border-bottom: 2px solid #334155;
+            background: #0f172a;
             padding: 0;
         }
         
@@ -79,21 +82,22 @@ HTML_TEMPLATE = """
             cursor: pointer;
             font-size: 1em;
             font-weight: 500;
-            color: #666;
+            color: #94a3b8;
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
             text-align: center;
         }
         
         .tab-button:hover {
-            background: #e9ecef;
-            color: #667eea;
+            background: #1e293b;
+            color: #00d9ff;
         }
         
         .tab-button.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-            background: white;
+            color: #00d9ff;
+            border-bottom-color: #00d9ff;
+            background: #1e293b;
+            box-shadow: inset 0 0 10px rgba(0,217,255,0.1);
         }
         
         /* Tab Content */
@@ -127,18 +131,18 @@ HTML_TEMPLATE = """
         }
         
         .panel {
-            background: #f8f9fa;
+            background: #0f172a;
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid #dee2e6;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #334155;
+            box-shadow: 0 4px 12px rgba(0,217,255,0.05);
         }
         
         .panel h2 {
-            color: #667eea;
+            color: #00d9ff;
             margin-bottom: 15px;
             font-size: 1.3em;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid #00d9ff;
             padding-bottom: 10px;
         }
         
@@ -150,47 +154,60 @@ HTML_TEMPLATE = """
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
-            color: #333;
+            color: #00d9ff;
             font-size: 0.95em;
         }
         
         select, input, textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #334155;
             border-radius: 5px;
             font-size: 1em;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: #00d9ff;
+            box-shadow: 0 0 8px rgba(0,217,255,0.2);
         }
         
         button {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+            color: #00d9ff;
             padding: 12px 20px;
-            border: none;
+            border: 1px solid #00d9ff;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
             font-weight: 500;
             width: 100%;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
         
-        button:hover { background: #764ba2; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
+        button:hover { 
+            background: linear-gradient(135deg, #164e63 0%, #0c4a6e 100%);
+            box-shadow: 0 0 15px rgba(0,217,255,0.4);
+        }
+        button:disabled { background: #334155; cursor: not-allowed; color: #64748b; border-color: #334155; }
         
         .stat {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+            color: #00d9ff;
             padding: 12px 18px;
             margin: 5px;
             border-radius: 5px;
             text-align: center;
             min-width: 100px;
             font-size: 0.95em;
+            border: 1px solid #00d9ff;
+            box-shadow: 0 0 10px rgba(0,217,255,0.2);
         }
         
-        .stat-number { font-size: 1.6em; font-weight: bold; }
+        .stat-number { font-size: 1.6em; font-weight: bold; color: #00ffff; }
         .stat-label { font-size: 0.85em; opacity: 0.9; }
         
         table {
@@ -198,21 +215,24 @@ HTML_TEMPLATE = """
             border-collapse: collapse;
             margin-top: 15px;
             font-size: 0.95em;
+            background: #0f172a;
         }
         
         th, td {
             padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
         }
         
         th {
-            background: #667eea;
-            color: white;
+            background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+            color: #00d9ff;
             font-weight: 600;
+            border: 1px solid #00d9ff;
         }
         
-        tr:hover { background: #f5f5f5; }
+        tr:hover { background: #1e293b; }
         
         .spam { color: #dc3545; font-weight: bold; }
         .suspicious { color: #ff9800; font-weight: bold; }
@@ -221,13 +241,13 @@ HTML_TEMPLATE = """
         .loading {
             text-align: center;
             padding: 20px;
-            color: #667eea;
+            color: #00d9ff;
             font-weight: 500;
         }
         
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 4px solid #334155;
+            border-top: 4px solid #00d9ff;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -240,27 +260,29 @@ HTML_TEMPLATE = """
             100% { transform: rotate(360deg); }
         }
         
-        .success { color: #28a745; }
-        .error { color: #dc3545; }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
         
         /* Graph visualization styling */
         #network {
             width: 100%;
             height: 600px;
-            border: 1px solid #ddd;
+            border: 1px solid #334155;
             border-radius: 5px;
-            background: white;
+            background: #0f172a;
         }
         
         .graph-legend {
             margin-top: 15px;
             font-size: 0.9em;
+            color: #e2e8f0;
         }
         
         .legend-item {
             display: inline-block;
             margin-right: 20px;
             margin-bottom: 8px;
+            color: #e2e8f0;
         }
         
         .legend-color {
@@ -287,31 +309,32 @@ HTML_TEMPLATE = """
         }
         
         .metric-box {
-            background: white;
+            background: #0f172a;
             padding: 15px;
             border-radius: 5px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #00d9ff;
+            border: 1px solid #334155;
+            box-shadow: 0 0 8px rgba(0,217,255,0.1);
         }
         
         .metric-label {
             font-size: 0.85em;
-            color: #666;
+            color: #94a3b8;
             margin-bottom: 5px;
         }
         
         .metric-value {
             font-size: 1.5em;
             font-weight: bold;
-            color: #667eea;
+            color: #00ffff;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Email Spam Detection System</h1>
+            <h1>Email Spam Detection System</h1>
             <p>Advanced Graph Theory Application with Network Visualization</p>
-            <div class="subtitle">Graph Algorithms: Dijkstra • MST • Centrality • Connected Components • Vertex Coloring</div>
         </div>
         
         <!-- Tab Navigation -->
@@ -377,7 +400,7 @@ HTML_TEMPLATE = """
         
         <!-- TAB 3: Analysis -->
         <div id="analysis" class="tab-content">
-            <div class="content">
+            <div class="content full-grid">
                 <div class="panel">
                     <h2>🔍 Graph Theory Metrics</h2>
                     <div id="metrics"></div>
@@ -402,10 +425,6 @@ HTML_TEMPLATE = """
                 <div class="panel">
                     <h2>🛣️ Dijkstra Shortest Path Finder</h2>
                     <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">Find the shortest communication path between any two email addresses in the network.</p>
-                    
-                    <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 12px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9em;">
-                        <strong>💡 Tip:</strong> Use arrow keys to navigate text fields. Examples: <code>spammer1@example.com</code>, <code>alice@example.com</code>
-                    </div>
                     
                     <div class="form-group">
                         <label>Source Email:</label>
@@ -926,8 +945,3 @@ if __name__ == '__main__':
     browser_thread.start()
     
     app.run(debug=False, port=5000)
-    print("  • Real-time spam analysis")
-    print("\n[INFO] Press Ctrl+C to stop\n")
-    print("="*70 + "\n")
-    
-    app.run(debug=False, host='localhost', port=5000)
